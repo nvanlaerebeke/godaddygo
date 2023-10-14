@@ -3,8 +3,6 @@ package godaddygo
 import (
 	"net/http"
 	"time"
-
-	"golang.org/x/time/rate"
 )
 
 // This is a comment so my IDE quits complaining to me
@@ -48,7 +46,6 @@ type Config struct {
 	env        APIEnv     // env is whether or not we are targeting prod or dev, use APIDevEnv or APIProdEnv
 	version    APIVersion // version should be `v1` or `v2`, use APIVersion1 or APIVersion2
 	domainName string     // dns zone to target
-	limiter    rate.Limiter
 }
 
 // DomainDetails defines the details of a domain

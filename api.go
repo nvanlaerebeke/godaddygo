@@ -2,7 +2,6 @@ package godaddygo
 
 import (
 	"github.com/nvanlaerebeke/godaddygo/internal/exception"
-	"golang.org/x/time/rate"
 )
 
 func newAPI(config *Config) (api, error) {
@@ -13,7 +12,6 @@ func newAPI(config *Config) (api, error) {
 	if config.env == APIDevEnv {
 		config.baseURL = devbaseURL
 	}
-	config.limiter = rate.NewLimiter(rate.Limit(55), 1)
 	return api{config}, nil
 }
 
