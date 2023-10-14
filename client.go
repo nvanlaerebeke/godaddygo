@@ -2,9 +2,11 @@ package godaddygo
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
+	"time"
 
 	"github.com/oze4/godaddygo/internal/exception"
 )
@@ -31,6 +33,14 @@ func makeDo(ctx context.Context, config *Config, method, path string, body io.Re
 	req.Header.Set("Content-Type", "application/json")
 
 	reqWithCtx := req.WithContext(ctx)
+
+	// Check rate limiting before making the request
+retry:
+	if err := config.limiter.Wait(ctx); err != nil {
+		time.Sleep(time.Second)
+		fmt.Printf("Rate limit exceeded: %s\n", err)
+		goto retry
+	}
 
 	resp, err := config.client.Do(reqWithCtx)
 	if err != nil {

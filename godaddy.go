@@ -3,6 +3,8 @@ package godaddygo
 import (
 	"net/http"
 	"time"
+
+	"golang.org/x/time/rate"
 )
 
 const (
@@ -18,9 +20,10 @@ func NewConfig(key, secret string, env APIEnv) *Config {
 		client: &http.Client{
 			Timeout: MaxHTTPClientTimeout,
 		},
-		key:    key,
-		secret: secret,
-		env:    env,
+		key:     key,
+		secret:  secret,
+		env:     env,
+		limiter: rate.NewLimiter(rate.Limit(55), 1),
 	}
 }
 
