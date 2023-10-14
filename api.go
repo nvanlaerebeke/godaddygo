@@ -1,7 +1,7 @@
 package godaddygo
 
 import (
-	"github.com/oze4/godaddygo/internal/exception"
+	"github.com/nvanlaerebeke/godaddygo/internal/exception"
 )
 
 func newAPI(config *Config) (api, error) {

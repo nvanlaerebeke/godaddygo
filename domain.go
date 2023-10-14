@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/oze4/godaddygo/internal/exception"
+	"github.com/nvanlaerebeke/godaddygo/internal/exception"
 )
 
 func newDomain(config *Config) domain {

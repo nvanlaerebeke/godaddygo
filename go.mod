@@ -1,4 +1,4 @@
-module github.com/oze4/godaddygo
+module github.com/nvanlaerebeke/godaddygo
 
 go 1.15
 

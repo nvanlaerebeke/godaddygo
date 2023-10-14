@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/oze4/godaddygo/internal/exception"
+	"github.com/nvanlaerebeke/godaddygo/internal/exception"
 )
 
 // makeDo makes an http.Request and sends it

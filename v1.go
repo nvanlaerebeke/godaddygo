@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/oze4/godaddygo/internal/exception"
+	"github.com/nvanlaerebeke/godaddygo/internal/exception"
 )
 
 // newV1 is for internal convenience

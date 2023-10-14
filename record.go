@@ -8,7 +8,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/oze4/godaddygo/internal/exception"
+	"github.com/nvanlaerebeke/godaddygo/internal/exception"
 )
 
 type records struct {
