@@ -2,17 +2,23 @@ package godaddygo
 
 import (
 	"context"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
-	"time"
 
 	"github.com/nvanlaerebeke/godaddygo/internal/exception"
+	"golang.org/x/time/rate"
 )
+
+var GoDaddyLimiter *rate.Limiter
 
 // makeDo makes an http.Request and sends it
 func makeDo(ctx context.Context, config *Config, method, path string, body io.Reader, expectStatus int) ([]byte, error) {
+	if GoDaddyLimiter == nil {
+		// Allow 55 requests over 60 seconds with a burst of 5
+		GoDaddyLimiter = rate.NewLimiter(rate.Limit(float64(55)/float64(60)), 5)
+	}
+
 	if !config.version.IsValid() {
 		return nil, exception.InvalidValue("version value not allowed")
 	}
@@ -35,12 +41,7 @@ func makeDo(ctx context.Context, config *Config, method, path string, body io.Re
 	reqWithCtx := req.WithContext(ctx)
 
 	// Check rate limiting before making the request
-retry:
-	if err := config.limiter.Wait(ctx); err != nil {
-		time.Sleep(time.Second)
-		fmt.Printf("Rate limit exceeded: %s\n", err)
-		goto retry
-	}
+	GoDaddyLimiter.Wait(context.TODO())
 
 	resp, err := config.client.Do(reqWithCtx)
 	if err != nil {
